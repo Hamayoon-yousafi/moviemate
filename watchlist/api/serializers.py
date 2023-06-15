@@ -3,15 +3,19 @@ from ..models import WatchList, StreamPlatform
 
 
 # model serializers
+class WatchListSerializer(serializers.ModelSerializer):
+    platform = serializers.StringRelatedField(many=False, read_only=True)
+    class Meta:
+        model = WatchList
+        fields = '__all__'
+
+
 class StreamPlatFormSerializer(serializers.ModelSerializer):
+    watchlist = WatchListSerializer(many=True, read_only=True)
     class Meta:
         model = StreamPlatform
         fields = '__all__'
 
-class WatchListSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = WatchList
-        fields = '__all__'
 
 
 

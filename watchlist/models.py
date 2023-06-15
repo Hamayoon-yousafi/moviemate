@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 class StreamPlatform(models.Model):
@@ -17,5 +18,14 @@ class WatchList(models.Model):
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['title'], name='unique_title')
+        ]
+
     def __str__(self):
         return self.title
+    
+    def clean(self):
+        if self.title == self.storyline:
+            raise ValidationError('Title and storyline cannot be the same')
