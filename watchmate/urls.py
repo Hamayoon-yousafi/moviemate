@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from watchlist.api.views import watchlist_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('watch/', include('watchlist.api.urls')),
+    path('', watchlist_views.WatchListAV.as_view(), name='movie-list'),
 ]
