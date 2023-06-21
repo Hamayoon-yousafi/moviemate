@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
+# class based views using APIView
 class WatchListAV(APIView):
 
     def get(self, request):
@@ -64,7 +65,6 @@ class WatchDetailsAV(APIView):
 
 
 # function based views
-
 # @api_view(['GET', 'POST'])
 # def movie_list(request):
 #     if request.method == 'GET':

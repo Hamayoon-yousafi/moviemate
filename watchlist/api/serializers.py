@@ -3,9 +3,10 @@ from ..models import WatchList, StreamPlatform, Review
 
 
 class ReviewSerializer(serializers.ModelSerializer):
+    review_user = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Review
-        fields = ['id', 'rating', 'description', 'watchlist']
+        fields = ['id', 'rating', 'description', 'review_user']
 
 
 # model serializers
@@ -23,11 +24,11 @@ class StreamPlatFormSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = StreamPlatform
         fields = '__all__'
-        extra_kwargs = {
-            'url': {'view_name': 'stream-details', 'lookup_field': 'pk'} 
-            # we can specify what field should be in url so if name is choosen: "url": "http://127.0.0.1:8000/watch/streams/Netflix/". 
-            # by default it takes pk as lookup_field so we can clean lookup_field property. but i am leaving it for reference.
-        }
+        # extra_kwargs = {
+        #     'url': {'view_name': 'stream-details', 'lookup_field': 'pk'} 
+        #     # we can specify what field should be in url so if name is choosen: "url": "http://127.0.0.1:8000/watch/streams/Netflix/". 
+        #     # by default it takes pk as lookup_field so we can clean lookup_field property. but i am leaving it for reference.
+        # }
 
 
 

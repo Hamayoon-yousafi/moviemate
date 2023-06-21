@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.contrib.auth.models import User
 
 
 class StreamPlatform(models.Model):
@@ -29,8 +30,7 @@ class WatchList(models.Model):
     
     def clean(self):
         if self.title == self.storyline:
-            raise ValidationError('Title and storyline cannot be the same')
-        
+            raise ValidationError('Title and storyline cannot be the same')       
 
 
 class Review(models.Model):
@@ -40,6 +40,7 @@ class Review(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     watchlist = models.ForeignKey(WatchList, on_delete=models.CASCADE, related_name="reviews")
+    review_user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self) -> str:
         return str(self.rating) + ' | ' + self.watchlist.title
