@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('watch/', include('watchlist.api.urls')),
     path('', watchlist_views.WatchListAV.as_view(), name='movie-list'),
+    path('api-auth/', include('rest_framework.urls'))
 ]
