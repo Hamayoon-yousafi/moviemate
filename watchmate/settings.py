@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # installed apps
     'rest_framework',
+    'rest_framework.authtoken',
 
     # custom apps
     'watchlist',
@@ -135,10 +136,20 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+REST_FRAMEWORK = {
+    # we are setting the default permission to IsAuthenticated so all pages require authenticated user be default
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #   'rest_framework.permissions.IsAuthenticated',
+    # ],
 
-# we are setting the default permission to IsAuthenticated so all pages require authenticated user be default
-# REST_FRAMEWORK = {
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.IsAuthenticated',
-#     ]
-# }
+    # for basic authentication
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.BasicAuthentication',
+    # ],
+
+    # for token authentication
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+
+}
