@@ -3,7 +3,7 @@ from ..serializers import ReviewSerializer
 from rest_framework import generics, mixins
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
-from ..permissions import AdminOrReadonly, ReviewUserOrReadonly
+from ..permissions import IsAdminOrReadonly, IsReviewUserOrReadonly
 from ..utils import calculate_number_of_ratings_and_average_ratings
 
 class ReviewCreate(generics.CreateAPIView):
@@ -28,7 +28,6 @@ class ReviewCreate(generics.CreateAPIView):
 
 class ReviewList(generics.ListAPIView):
     serializer_class = ReviewSerializer
-    permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
         watchlist_id = self.kwargs['watchlist_id']
@@ -38,7 +37,7 @@ class ReviewList(generics.ListAPIView):
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    permission_classes = [ReviewUserOrReadonly]
+    permission_classes = [IsReviewUserOrReadonly]
 
 
 # using generics.GenericAPIView class with mixins CRUD classes

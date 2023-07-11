@@ -5,9 +5,9 @@ from django.contrib.auth.models import User
 
 
 class StreamPlatform(models.Model):
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, unique=True)
     description = models.CharField(max_length=150)
-    website = models.URLField(max_length=100)
+    website = models.URLField(max_length=100, unique=True)
 
     def __str__(self):
         return self.name
@@ -45,4 +45,4 @@ class Review(models.Model):
     review_user = models.ForeignKey(User, on_delete=models.CASCADE)
     
     def __str__(self) -> str:
-        return str(self.rating) + ' | ' + self.watchlist.title
+        return str(self.rating) + ' | ' + self.watchlist.title + ' | ' + self.review_user.username

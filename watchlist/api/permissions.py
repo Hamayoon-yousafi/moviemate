@@ -2,7 +2,7 @@ from rest_framework import permissions
 from ..models import WatchList
 
 
-class AdminOrReadonly(permissions.IsAdminUser):
+class IsAdminOrReadonly(permissions.IsAdminUser):
     
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
@@ -12,7 +12,7 @@ class AdminOrReadonly(permissions.IsAdminUser):
             # Check permissions for write request
             return bool(request.user and request.user.is_staff)
 
-class ReviewUserOrReadonly(permissions.BasePermission):
+class IsReviewUserOrReadonly(permissions.BasePermission):
 
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
@@ -20,4 +20,4 @@ class ReviewUserOrReadonly(permissions.BasePermission):
             return True
         else:
             # Check permissions for write request
-            return obj.review_user == request.user
+            return obj.review_user == request.user or request.user.is_staff

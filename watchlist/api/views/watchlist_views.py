@@ -3,10 +3,12 @@ from ..serializers import WatchListSerializer
 from rest_framework.response import Response
 # from rest_framework.decorators import api_view
 from rest_framework.views import APIView
+from ..permissions import *
 
 
 # class based views using APIView
 class WatchListAV(APIView):
+    permission_classes = [IsAdminOrReadonly]
 
     def get(self, request):
         movies = WatchList.objects.all()
@@ -24,6 +26,7 @@ class WatchListAV(APIView):
 
 # individual watch class view
 class WatchDetailsAV(APIView):
+    permission_classes = [IsAdminOrReadonly]
 
     def get(self, request, pk):
         try:

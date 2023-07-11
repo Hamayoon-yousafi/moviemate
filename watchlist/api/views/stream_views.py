@@ -2,12 +2,14 @@ from ...models import StreamPlatform
 from ..serializers import StreamPlatFormSerializer
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
+from ..permissions import IsAdminOrReadonly
 # from rest_framework.views import APIView
 from rest_framework import viewsets
 
 
 # ---class based views using ModelViewSet
 class StreamPlatformVS(viewsets.ModelViewSet):
+    permission_classes = [IsAdminOrReadonly]
     queryset = StreamPlatform.objects.all()
     serializer_class = StreamPlatFormSerializer
 
