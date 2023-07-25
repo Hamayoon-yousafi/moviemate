@@ -149,8 +149,20 @@ REST_FRAMEWORK = {
 
     # for token authentication
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework.authentication.TokenAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication'
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
+
+    # for throttling
+    # 'DEFAULT_THROTTLE_CLASSES': [ # setting throttling classes globally for all the views
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle'
+    # ],
+    'DEFAULT_THROTTLE_RATES': {
+        'anon': '1/day',
+        'user': '3/day',
+        'review-create': '1/day',
+        'review-list': '10/day'
+    }
 
 }
