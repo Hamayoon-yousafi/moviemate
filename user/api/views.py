@@ -36,6 +36,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import IsAuthenticated
 from .serializers import RegistrationSerializer
+from rest_framework import status
 from .. import models # importing the models so the code in the models can run and create a signal
 
 
@@ -59,7 +60,7 @@ def registration_view(request):
         else:
             data = serializer.errors
 
-        return Response(data)
+        return Response(data, status=status.HTTP_201_CREATED)
     
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])

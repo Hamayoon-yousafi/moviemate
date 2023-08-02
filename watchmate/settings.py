@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # installed apps
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
 
     # custom apps
     'watchlist',
@@ -142,14 +143,15 @@ REST_FRAMEWORK = {
     #   'rest_framework.permissions.IsAuthenticated',
     # ],
 
-    # for basic authentication
-    # 'DEFAULT_AUTHENTICATION_CLASSES': [
-    #     'rest_framework.authentication.BasicAuthentication',
-    # ],
-
-    # for token authentication
+    
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        # for basic authentication
+        # 'rest_framework.authentication.BasicAuthentication',
+
+        # for token authentication
         'rest_framework.authentication.TokenAuthentication',
+        
+        # for jwt authentication
         # 'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
 
@@ -163,6 +165,13 @@ REST_FRAMEWORK = {
         'user': '3/day',
         'review-create': '1/day',
         'review-list': '10/day'
-    }
+    },
+
+    # for pagination: setting globally for all views
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 5
+
+    # default rendering class
+    # 'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',)
 
 }

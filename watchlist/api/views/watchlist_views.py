@@ -5,25 +5,38 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from ..permissions import *
 from rest_framework.throttling import UserRateThrottle, AnonRateThrottle
+from rest_framework import generics, mixins 
+from rest_framework import filters
+from ..pagination import WatchListPagination, WatchListLimitOffsetPagination, WatchListCursorPagination
+
+
+class WatchListAV(generics.ListAPIView):
+    permission_classes = [IsAdminOrReadonly]
+    serializer_class = WatchListSerializer
+    queryset = WatchList.objects.all()
+    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    search_fields = ['title', 'storyline', 'platform__name']
+    ordering_fields = ['avg_rating']
+    pagination_class = WatchListPagination
 
 
 # class based views using APIView
-class WatchListAV(APIView):
-    permission_classes = [IsAdminOrReadonly]
-    # throttle_classes = [UserRateThrottle, AnonRateThrottle]
+# class WatchListAV(APIView):
+#     permission_classes = [IsAdminOrReadonly]
+#     # throttle_classes = [UserRateThrottle, AnonRateThrottle]
 
-    def get(self, request):
-        movies = WatchList.objects.all()
-        serializer = WatchListSerializer(movies, many=True)
-        return Response(serializer.data)
+#     def get(self, request):
+#         movies = WatchList.objects.all()
+#         serializer = WatchListSerializer(movies, many=True)
+#         return Response(serializer.data)
 
-    def post(self, request):
-        serializer = WatchListSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=201)
-        else:
-            return Response(serializer.errors, status=400)
+#     def post(self, request):
+#         serializer = WatchListSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=201)
+#         else:
+#             return Response(serializer.errors, status=400)
         
 
 # individual watch class view
@@ -61,12 +74,6 @@ class WatchDetailsAV(APIView):
         movie.delete()
         return Response(status=204)
     
-
-
-
-
-
-
 
 
 # function based views

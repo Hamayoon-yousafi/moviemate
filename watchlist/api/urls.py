@@ -22,4 +22,7 @@ urlpatterns = [
     path('watchlist/<int:watchlist_id>/review-create/', review_views.ReviewCreate.as_view(), name='review-create'),
     path('watchlist/<int:watchlist_id>/reviews/', review_views.ReviewList.as_view(), name='review-list'),
     path('watchlist/reviews/<int:pk>/', review_views.ReviewDetail.as_view(), name='review-detail'),
+
+
+    path('watchlist/reviews/', review_views.UserReview.as_view(), name='user-review-detail'),
 ]
